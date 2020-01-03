@@ -1,0 +1,99 @@
+@mixin dis-flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin dis-flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin row-config {
+    td {
+        height: 50px;
+        width: 25%;
+    }
+}
+
+html {
+    background-image: url('../images/galaxy.jpg');
+}
+
+h1, p, h2, h3 {
+    color: white;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+
+body {
+    height: 100%;
+    width: 100%;
+    @include dis-flex-col;
+}
+
+.planet-holder {
+    height: 100%;
+    width: 100%;
+    @include dis-flex-col;
+
+    .planet-header {
+        width: 100%;
+    }
+
+    .planet-resources {
+        @include dis-flex-row;
+        width: inherit;
+    
+        .planet-resource {
+            width: 33.3%;
+            height: auto;
+
+            .planet-resource-row {
+                @include dis-flex-row;
+                @include row-config;
+                button {
+                    height: 50px;
+                    width: 100px;
+                }
+            }
+        }
+        .planet-buildings {
+            width: 33.3%;
+            height: auto;
+
+            .planet-building-row {
+                @include dis-flex-row;
+                @include row-config;
+                button {
+                    height: 50px;
+                    width: 100px;
+                }
+            }
+        }
+    }
+
+    .tempCol {
+        @include dis-flex-row;
+        width:100%;
+        .planet-houses {
+            width: 33.3%;
+            height: auto;
+    
+            .planet-building-row {
+                @include dis-flex-row;
+                @include row-config;
+                button {
+                    height: 50px;
+                    width: 100px;
+                }
+            }
+        }
+    }
+}

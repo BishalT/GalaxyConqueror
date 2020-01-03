@@ -1,0 +1,102 @@
+html {
+  background-image: url("../images/galaxy.jpg");
+}
+
+h1, p, h2, h3 {
+  color: white;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.planet-holder {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.planet-holder .planet-header {
+  width: 100%;
+}
+.planet-holder .planet-resources {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: inherit;
+}
+.planet-holder .planet-resources .planet-resource {
+  width: 33.3%;
+  height: auto;
+}
+.planet-holder .planet-resources .planet-resource .planet-resource-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.planet-holder .planet-resources .planet-resource .planet-resource-row td {
+  height: 50px;
+  width: 25%;
+}
+.planet-holder .planet-resources .planet-resource .planet-resource-row button {
+  height: 50px;
+  width: 100px;
+}
+.planet-holder .planet-resources .planet-buildings {
+  width: 33.3%;
+  height: auto;
+}
+.planet-holder .planet-resources .planet-buildings .planet-building-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.planet-holder .planet-resources .planet-buildings .planet-building-row td {
+  height: 50px;
+  width: 25%;
+}
+.planet-holder .planet-resources .planet-buildings .planet-building-row button {
+  height: 50px;
+  width: 100px;
+}
+.planet-holder .tempCol {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.planet-holder .tempCol .planet-houses {
+  width: 33.3%;
+  height: auto;
+}
+.planet-holder .tempCol .planet-houses .planet-building-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.planet-holder .tempCol .planet-houses .planet-building-row td {
+  height: 50px;
+  width: 25%;
+}
+.planet-holder .tempCol .planet-houses .planet-building-row button {
+  height: 50px;
+  width: 100px;
+}
+
+/*# sourceMappingURL=index.css.map */
