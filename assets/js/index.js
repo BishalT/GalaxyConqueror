@@ -21,6 +21,28 @@ var planet_values = {
     }
 };
 
+var baseValues = {
+    resources: {
+        stone_count: 100,
+        wood_count: 100,
+        food_count: 100,
+    },
+    population: {
+        population_count: 30,
+        max_count: 30,
+    },
+    buildings: {
+        quarry_count: 0,
+        farm_count: 0,
+        forester_count: 0,
+    },
+    houses:{
+        hut_count: 10,
+        house_count: 0,
+        mansion_count: 0,
+    }
+};
+
 // cost of each building
 
 var building_costs = {
@@ -47,6 +69,16 @@ var building_costs = {
         wood: 1000,
         stone: 1000,
     }
+}
+
+function reset_game(){
+    var confirmed = confirm("Do you wish to reset?")
+    if(confirmed){
+        planet_vales = baseValues;
+        deleteSave();
+
+    }
+    document.location.reload();
 }
 
 
