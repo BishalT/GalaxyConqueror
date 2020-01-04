@@ -1,3 +1,9 @@
+@mixin dis-flex-col-no-justify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @mixin dis-flex-col {
     display: flex;
     flex-direction: column;
@@ -19,29 +25,32 @@
     }
 }
 
-html {
-    background-image: url('../images/galaxy.jpg');
-}
-
 h1, p, h2, h3 {
     color: white;
+    font-family: 'lato',sans-serif
 }
 
 h1, h2, h3 {
     margin: 0;
+    font-weight: 300;
+    font-size: 30px;
+    letter-spacing: 5px;
+    background: -webkit-linear-gradient(white, #38495a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 
 body {
     height: 100%;
     width: 100%;
-    @include dis-flex-col;
+    background-color: inherit
 }
 
 .planet-holder {
     height: 100%;
     width: 100%;
-    @include dis-flex-col;
+    @include dis-flex-col-no-justify;
 
     .planet-header {
         width: 100%;

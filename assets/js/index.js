@@ -74,6 +74,10 @@ function readSavedData(data){
     planet_values = data;
 }
 
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+
 // Initalize Values
 window.onload = function(){
     // if no save exists, then create a new one
