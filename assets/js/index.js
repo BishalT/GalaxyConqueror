@@ -60,13 +60,13 @@ function bake_cookie(name, value) {
 	exdate.setDate(exdate.getDate() + 30);
 	var cookie = [name, '=', JSON.stringify(value),'; expires=.', exdate.toUTCString(), '; domain=.', window.location.host.toString()].join('');
     document.cookie = cookie;
-    console.log("bake_ " + cookie)
+    // console.log("bake_ " + cookie)
 }
 
 function read_cookie(name) {
 	var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
     result && (result = JSON.parse(result[1]));
-    console.log("read_ " + result)
+    // console.log("read_ " + result)
 	return result;
 }
 
@@ -186,7 +186,7 @@ function perform_action(category, elem){
 function update_values(elem, count){
     var updateVal = elem+": "+count
     if(elem == "max"){
-        updateVal = "Max Population: " + count
+        updateVal = "Max: " + count
     }
     document.getElementsByClassName(elem.toLowerCase()+"-count")[0].textContent = updateVal;
 }
@@ -194,14 +194,14 @@ function update_values(elem, count){
 function update_max_pop(category, elem){
     var increase = 0;
     switch(elem){
-        case "tent_count":
-            increase = 2;
-            break;
         case "hut_count":
             increase = 3;
             break;
         case "house_count":
-            increase; 5;
+            increase = 5;
+            break;
+        case "mansion_count":
+            increase = 10;
             break;
     }
     planet_values["population"]["max_count"] += increase;
