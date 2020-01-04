@@ -21,30 +21,7 @@ var planet_values = {
     }
 };
 
-var baseValues = {
-    resources: {
-        stone_count: 100,
-        wood_count: 100,
-        food_count: 100,
-    },
-    population: {
-        population_count: 30,
-        max_count: 30,
-    },
-    buildings: {
-        quarry_count: 0,
-        farm_count: 0,
-        forester_count: 0,
-    },
-    houses:{
-        hut_count: 10,
-        house_count: 0,
-        mansion_count: 0,
-    }
-};
-
 // cost of each building
-
 var building_costs = {
     quarry: {
         wood: 50
@@ -70,15 +47,42 @@ var building_costs = {
         stone: 1000,
     }
 }
-
+function write_values(){
+    for(category in planet_values){
+        Object.keys(planet_values[category]).forEach(function(item){
+            upper_elem = item.replace(/^\w/, c => c.toUpperCase());
+            console.log(category, item, planet_values[category][item])
+            update_values(upper_elem.split("_")[0], planet_values[category][item]); 
+        });
+    }
+}
 function reset_game(){
     var confirmed = confirm("Do you wish to reset?")
-    if(confirmed){
-        planet_vales = baseValues;
-        deleteSave();
-
+    if(!confirmed){
+        return;
     }
-    document.location.reload();
+    planet_values = {
+        resources: {
+            stone_count: 100,
+            wood_count: 100,
+            food_count: 100,
+        },
+        population: {
+            population_count: 30,
+            max_count: 30,
+        },
+        buildings: {
+            quarry_count: 0,
+            farm_count: 0,
+            forester_count: 0,
+        },
+        houses:{
+            hut_count: 10,
+            house_count: 0,
+            mansion_count: 0,
+        }
+    };
+    write_values();
 }
 
 
@@ -118,14 +122,7 @@ window.onload = function(){
     } else { // else read from it
         readSavedData(read_cookie("save_galaxy"));
     }
-
-    for(category in planet_values){
-        Object.keys(planet_values[category]).forEach(function(item){
-            upper_elem = item.replace(/^\w/, c => c.toUpperCase());
-            console.log(category, item, planet_values[category][item])
-            update_values(upper_elem.split("_")[0], planet_values[category][item]); 
-        });
-    }
+    write_values();
 };
 
 // auto-save 10mins
