@@ -51,15 +51,9 @@ var building_costs = {
 
 
 function deleteSave(){
-	//Deletes the current savegame by setting the game's cookies to expire in the past.
-	var really = confirm('Really delete save?'); //Check the player really wanted to do that.
-	if (really){
-        document.cookie = ['civ', '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.', window.location.host.toString()].join('');
-		document.cookie = ['civ2', '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.', window.location.host.toString()].join('');
-		localStorage.removeItem('civ');
-		localStorage.removeItem('civ2');
-        gameLog('Save Deleted');
-	}
+    document.cookie = ['save_galaxy', '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.', window.location.host.toString()].join('');
+    localStorage.removeItem('save_galaxy');
+    gameLog('Save Deleted');
 }
 
 function bake_cookie(name, value) {
@@ -93,6 +87,12 @@ window.onload = function(){
         });
     }
 };
+
+// auto-save 10mins
+window.setInterval(function(){
+    deleteSave();
+    bake_cookie("save_galaxy", planet_values)
+}, 10000);
 
 // Update function every second
 function update_population(){
