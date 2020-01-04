@@ -53,7 +53,6 @@ var building_costs = {
 function deleteSave(){
     document.cookie = ['save_galaxy', '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.', window.location.host.toString()].join('');
     localStorage.removeItem('save_galaxy');
-    gameLog('Save Deleted');
 }
 
 function bake_cookie(name, value) {
@@ -71,13 +70,18 @@ function read_cookie(name) {
 	return result;
 }
 
+function readSavedData(data){
+    planet_values = data;
+}
 
 // Initalize Values
 window.onload = function(){
+    // if no save exists, then create a new one
     if(read_cookie("save_galaxy") == null){
         bake_cookie("save_galaxy", planet_values)
+    } else { // else read from it
+        readSavedData(read_cookie("save_galaxy"));
     }
-    read_cookie("save_galaxy");
 
     for(category in planet_values){
         Object.keys(planet_values[category]).forEach(function(item){
