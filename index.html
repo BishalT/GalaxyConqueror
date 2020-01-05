@@ -40,9 +40,10 @@
                 </table>
                 <img src="assets/images/planet-Earth.png"/>
                 <table class="planet-resource">
-                    <tr class="planet-resource-row">
-                        <td><p class=""> Placeholder: </p></td>                    
-                    </tr>
+                        <tr class="planet-population-row">
+                                <td><button onclick="perform_action('population', 'population_count')"><img src="assets/images/icon/person-icon.png"/>Increase</button></td>
+                                <td><p class="wood-count">Population</p></td>
+                        </tr>
                 </table>
             </div>
             <div class="tempCol">
@@ -77,17 +78,17 @@
                     <table class="planet-houses">
                             <tr class="planet-building-row">
                                 <td><p class="hut-count"> Hut: </p></td>
-                                <td><button onclick="perform_action('houses','hut_count')" data-toggle="tooltip" data-placement="left" title="20 wood, 20 stone, +3 max">
+                                <td><button onclick="perform_action('houses','hut_count')" data-toggle="tooltip" data-placement="left" title="20 wood, 20 stone, +5 max">
                                         <img src="assets/images/icon/house-icon.png"/>Build</button></td>
                             </tr>
                             <tr class="planet-building-row">
                                 <td><p class="house-count"> House: </p></td>
-                                <td><button onclick="perform_action('houses','house_count')" data-toggle="tooltip" data-placement="left" title="100 wood, 100 stone, +5 max">
+                                <td><button onclick="perform_action('houses','house_count')" data-toggle="tooltip" data-placement="left" title="100 wood, 100 stone, +10 max">
                                         <img src="assets/images/icon/house-icon.png"/>Build</button></td>
                             </tr>
                             <tr class="planet-building-row">
                                 <td><p class="mansion-count"> Mansion: </p></td>
-                                <td><button onclick="perform_action('houses','mansion_count')" data-toggle="tooltip" data-placement="left" title="1000 wood, 1000 stone, +10 max">
+                                <td><button onclick="perform_action('houses','mansion_count')" data-toggle="tooltip" data-placement="left" title="1000 wood, 1000 stone, +25 max">
                                         <img src="assets/images/icon/house-icon.png"/>Build</button></td>
                             </tr>
                     </table>

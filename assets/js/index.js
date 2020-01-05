@@ -206,10 +206,20 @@ function check_valid(elem){
     return 1;
 }
 
+function check_valid_pop(){
+    if(planet_values["population"]["population_count"] < planet_values["population"]["max_count"]){
+        return 1;
+    }
+    return 0;
+}
+
 function perform_action(category, elem){
     var valid_action = 1;
     if(category == "buildings" || category == "houses"){
         valid_action = check_valid(elem);
+    }
+    if(category == "population") {
+        valid_action = check_valid_pop()
     }
     
     if(!valid_action)

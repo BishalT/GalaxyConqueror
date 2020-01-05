@@ -49,25 +49,25 @@ body {
   height: auto;
 }
 
-.planet-building-row, .planet-resource-row {
+.planet-building-row, .planet-resource-row, .planet-population-row {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.planet-building-row td, .planet-resource-row td {
+.planet-building-row td, .planet-resource-row td, .planet-population-row td {
   height: 50px;
   width: 25%;
 }
-.planet-building-row button, .planet-resource-row button {
+.planet-building-row button, .planet-resource-row button, .planet-population-row button {
   height: 50px;
   width: 75%;
 }
-.planet-building-row button img, .planet-resource-row button img {
+.planet-building-row button img, .planet-resource-row button img, .planet-population-row button img {
   height: 50%;
   width: auto;
   padding-right: 10px;
 }
-.planet-building-row td, .planet-resource-row td {
+.planet-building-row td, .planet-resource-row td, .planet-population-row td {
   display: flex;
   flex-direction: row;
   align-items: center;

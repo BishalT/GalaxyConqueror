@@ -78,7 +78,7 @@ body {
     height: auto;
 }
 
-.planet-building-row, .planet-resource-row {
+.planet-building-row, .planet-resource-row, .planet-population-row {
     @include dis-flex-row-no-justify;
     @include row-config;
     button {
