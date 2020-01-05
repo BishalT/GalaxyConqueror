@@ -23,51 +23,83 @@
             <div class="planet-resources">
                 <table class="planet-resource">
                     <tr class="planet-resource-row">
-                        <td><button onclick="perform_action('resources', 'stone_count')">Mine</button></td>
-                        <td><a href="#" data-toggle="tooltip" title="0.0/s"><p class="stone-count">Stone: </p></a></td>
+                        <td><button onclick="perform_action('resources', 'stone_count')"><img src="assets/images/icon/pickaxe-icon.png"/> Mine</button></td>
+                        <td><p class="stone-count">Stone: </p></td>
+                        <td><p class="stone-rate">0.0/s</p></td>
                     </tr>
                     <tr class="planet-resource-row">
-                        <td><button onclick="perform_action('resources', 'food_count')">Harvest</button></td>
-                        <td><a href="#" data-toggle="tooltip" title="0.0/s"><p class="food-count">Food: </p></a></td>
+                        <td><button onclick="perform_action('resources', 'food_count')"><img src="assets/images/icon/food-icon.png"/>Harvest</button></td>
+                        <td><p class="food-count">Food: </p></td>
+                        <td><p class="food-rate">0.0/s</p></td>
                     </tr>
                     <tr class="planet-resource-row">
-                        <td><button onclick="perform_action('resources', 'wood_count')"> Chop</button></td>
-                        <td><a href="#" data-toggle="tooltip" title="0.0/s"><p class="wood-count">Wood: </p></a></td>
+                        <td><button onclick="perform_action('resources', 'wood_count')"><img src="assets/images/icon/axe-icon.png"/>Chop</button></td>
+                        <td><p class="wood-count">Wood: </p></td>
+                        <td><p class="wood-rate">0.0/s</p></td>
                     </tr>
                 </table>
                 <img src="assets/images/planet-Earth.png"/>
-                <table class="planet-buildings">
-                    <tr class="planet-building-row">
-                        <td><p class="quarry-count"> Quarry: </p></td>
-                        <td><button onclick="perform_action('buildings','quarry_count')" data-toggle="tooltip" data-placement="right" title="50 wood"> Build</button></td>
-                    </tr>
-                    <tr class="planet-building-row">
-                        <td><p class="forester-count"> Forester: </p></td>
-                        <td><button onclick="perform_action('buildings','forester_count')" data-toggle="tooltip" data-placement="right" title="25 wood, 25 stone">Build</button></td>
-                    </tr>
-                    <tr class="planet-building-row">
-                        <td><p class="farm-count"> Farm: </p></td>
-                        <td><button onclick="perform_action('buildings','farm_count')" data-toggle="tooltip" data-placement="right" title="10 wood, 10 stone">Build</button></td>
+                <table class="planet-resource">
+                    <tr class="planet-resource-row">
+                        <td><p class=""> Placeholder: </p></td>                    
                     </tr>
                 </table>
             </div>
             <div class="tempCol">
-                <table class="planet-houses">
-                        <tr class="planet-building-row">
-                            <td><button onclick="perform_action('houses','hut_count')" data-toggle="tooltip" data-placement="left" title="20 wood, 20 stone, +3 max">Build</button></td>
-                            <td><p class="hut-count"> Hut: </p></td>
-                        </tr>
-                        <tr class="planet-building-row">
-                            <td><button onclick="perform_action('houses','house_count')" data-toggle="tooltip" data-placement="left" title="100 wood, 100 stone, +5 max">Build</button></td>
-                            <td><p class="house-count"> House: </p></td>
-                        </tr>
-                        <tr class="planet-building-row">
-                            <td><button onclick="perform_action('houses','mansion_count')" data-toggle="tooltip" data-placement="left" title="1000 wood, 1000 stone, +10 max" >Build</button></td>
-                            <td><p class="mansion-count"> Mansion: </p></td>
-                        </tr>
-                </table>
+                <div class="tab">
+                    <button class="tablinks" onclick="openCity(event, 'production')">Production</button>
+                    <button class="tablinks" onclick="openCity(event, 'housing')">Housing</button>
+                    <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+                </div>
+                
+                <!-- Tab content -->
+                <div id="production" class="tabcontent">
+                    <table class="planet-buildings">
+                            <tr class="planet-building-row">
+                                <td><p class="quarry-count"> Quarry: </p></td>
+                                <td><button onclick="perform_action('buildings','quarry_count')" data-toggle="tooltip" data-placement="right" title="50 wood"> 
+                                        <img src="assets/images/icon/hammer-icon.png"/>Build</button></td>
+                            </tr>
+                            <tr class="planet-building-row">
+                                <td><p class="forester-count"> Forester: </p></td>
+                                <td><button onclick="perform_action('buildings','forester_count')" data-toggle="tooltip" data-placement="right" title="25 wood, 25 stone">
+                                        <img src="assets/images/icon/hammer-icon.png"/>Build</button></td>
+                            </tr>
+                            <tr class="planet-building-row">
+                                <td><p class="farm-count"> Farm: </p></td>
+                                <td><button onclick="perform_action('buildings','farm_count')" data-toggle="tooltip" data-placement="right" title="10 wood, 10 stone">
+                                        <img src="assets/images/icon/hammer-icon.png"/>Build</button></td>
+                            </tr>
+                    </table>
+                </div>
+                
+                <div id="housing" class="tabcontent">
+                    <table class="planet-houses">
+                            <tr class="planet-building-row">
+                                <td><p class="hut-count"> Hut: </p></td>
+                                <td><button onclick="perform_action('houses','hut_count')" data-toggle="tooltip" data-placement="left" title="20 wood, 20 stone, +3 max">
+                                        <img src="assets/images/icon/house-icon.png"/>Build</button></td>
+                            </tr>
+                            <tr class="planet-building-row">
+                                <td><p class="house-count"> House: </p></td>
+                                <td><button onclick="perform_action('houses','house_count')" data-toggle="tooltip" data-placement="left" title="100 wood, 100 stone, +5 max">
+                                        <img src="assets/images/icon/house-icon.png"/>Build</button></td>
+                            </tr>
+                            <tr class="planet-building-row">
+                                <td><p class="mansion-count"> Mansion: </p></td>
+                                <td><button onclick="perform_action('houses','mansion_count')" data-toggle="tooltip" data-placement="left" title="1000 wood, 1000 stone, +10 max">
+                                        <img src="assets/images/icon/house-icon.png"/>Build</button></td>
+                            </tr>
+                    </table>
+                </div>
+                
+                <div id="Tokyo" class="tabcontent">
+                    <h3>Tokyo</h3>
+                    <p>Tokyo is the capital of Japan.</p>
+                </div>
             </div>
         </div>
+
         <div class="footer">
             <button onclick="reset_game()"> Reset </button>
         </div>      

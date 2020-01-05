@@ -26,76 +26,96 @@ body {
   flex-direction: column;
   align-items: center;
 }
-.planet-holder .planet-header {
+
+.planet-header {
   width: 100%;
 }
-.planet-holder .planet-resources {
+
+.planet-resources {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   width: inherit;
 }
-.planet-holder .planet-resources .planet-resource {
+
+.planet-resource {
   width: 33.3%;
   height: auto;
 }
-.planet-holder .planet-resources .planet-resource .planet-resource-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.planet-holder .planet-resources .planet-resource .planet-resource-row td {
-  height: 50px;
-  width: 25%;
-}
-.planet-holder .planet-resources .planet-resource .planet-resource-row button {
-  height: 50px;
-  width: 100px;
-}
-.planet-holder .planet-resources .planet-buildings {
-  width: 33.3%;
+
+.planet-buildings, .planet-houses {
+  width: 100%;
   height: auto;
 }
-.planet-holder .planet-resources .planet-buildings .planet-building-row {
+
+.planet-building-row, .planet-resource-row {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
 }
-.planet-holder .planet-resources .planet-buildings .planet-building-row td {
+.planet-building-row td, .planet-resource-row td {
   height: 50px;
   width: 25%;
 }
-.planet-holder .planet-resources .planet-buildings .planet-building-row button {
+.planet-building-row button, .planet-resource-row button {
   height: 50px;
-  width: 100px;
+  width: 75%;
 }
-.planet-holder .tempCol {
+.planet-building-row button img, .planet-resource-row button img {
+  height: 50%;
+  width: auto;
+  padding-right: 10px;
+}
+.planet-building-row td, .planet-resource-row td {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  align-items: center;
+}
+
+.tempCol {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
 }
-.planet-holder .tempCol .planet-houses {
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
   width: 33.3%;
-  height: auto;
 }
-.planet-holder .tempCol .planet-houses .planet-building-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  width: 33.3%;
 }
-.planet-holder .tempCol .planet-houses .planet-building-row td {
-  height: 50px;
-  width: 25%;
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
 }
-.planet-holder .tempCol .planet-houses .planet-building-row button {
-  height: 50px;
-  width: 100px;
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  width: 33.3%;
 }
 
 .footer {

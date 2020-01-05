@@ -21,6 +21,12 @@ var planet_values = {
     }
 };
 
+var prod_upgrades = {
+    quarry: 1,
+    farm: 1,
+    forester: 1,
+}
+
 // cost of each building
 var building_costs = {
     quarry: {
@@ -47,6 +53,7 @@ var building_costs = {
         stone: 1000,
     }
 }
+
 function write_values(){
     for(category in planet_values){
         Object.keys(planet_values[category]).forEach(function(item){
@@ -132,6 +139,7 @@ window.setInterval(function(){
 }, 10000);
 
 // Update function every second
+// TODO: Make better population algorithm
 function update_population(){
     if(planet_values["buildings"]["farm_count"] < 10)
         return;
@@ -154,22 +162,26 @@ function update_population(){
 
 function update_resource_stone(){
     var quarry_count = planet_values["buildings"]["quarry_count"];
-    planet_values["resources"]["stone_count"] += quarry_count * 1;
+    planet_values["resources"]["stone_count"] += quarry_count * prod_upgrades["quarry"];
     update_values("Stone", planet_values["resources"]["stone_count"]);
+    update_rates("stone", prod_upgrades["quarry"] * quarry_count);
 }
 
 function update_resource_wood(){
     var forester_count = planet_values["buildings"]["forester_count"];
-    planet_values["resources"]["wood_count"] += forester_count * 1;
+    planet_values["resources"]["wood_count"] += forester_count  * prod_upgrades["forester"];
     update_values("Wood", planet_values["resources"]["wood_count"]);
+    update_rates("wood", prod_upgrades["forester"] * forester_count);
 }
 
 function update_resource_food(){
     var farm_count = planet_values["buildings"]["farm_count"];
-    planet_values["resources"]["food_count"] += farm_count * 1;
+    planet_values["resources"]["food_count"] += farm_count * prod_upgrades["farm"];
     update_values("Food", planet_values["resources"]["food_count"]);
+    update_rates("food", prod_upgrades["farm"] * farm_count);
 }
 
+// incremental update function
 window.setInterval(function(){
     update_resource_stone();
     update_resource_wood();
@@ -220,19 +232,45 @@ function update_values(elem, count){
     document.getElementsByClassName(elem.toLowerCase()+"-count")[0].textContent = updateVal;
 }
 
+function update_rates(elem, rate){
+    var updateRate = rate.toFixed(1) + "/s";
+    $("."+elem+'-rate')[0].textContent = updateRate;
+}
+
 function update_max_pop(category, elem){
     var increase = 0;
     switch(elem){
         case "hut_count":
-            increase = 3;
-            break;
-        case "house_count":
             increase = 5;
             break;
-        case "mansion_count":
+        case "house_count":
             increase = 10;
+            break;
+        case "mansion_count":
+            increase = 25;
             break;
     }
     planet_values["population"]["max_count"] += increase;
     update_values("max", planet_values["population"]["max_count"]);
 }
+
+function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+  
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+  
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+  
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
