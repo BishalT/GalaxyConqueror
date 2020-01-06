@@ -35,6 +35,12 @@ var prod_type = {
     food: "farm",
 }
 
+var storage_type = {
+    stone: "stockpile",
+    food: "barn",
+    wood: "mill"
+}
+
 var resource_max = {
     stone: 250,
     wood: 250,
@@ -84,22 +90,15 @@ var building_costs = {
     }
 }
 
-function write_values(){
-    for(category in planet_values){
-        Object.keys(planet_values[category]).forEach(function(item){
-            upper_elem = item.replace(/^\w/, c => c.toUpperCase());
-            console.log(category, item, planet_values[category][item])
-            update_values(upper_elem.split("_")[0], planet_values[category][item]); 
-        });
-    }
-}
-
 function reset_game(){
     var confirmed = confirm("Do you wish to reset?")
     if(!confirmed){
         return;
     }
     planet_values = {
+        year: {
+            year_count: 0,
+        },
         resources: {
             stone_count: 100,
             wood_count: 100,
@@ -157,6 +156,16 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
 
+function write_values(){
+    for(category in planet_values){
+        Object.keys(planet_values[category]).forEach(function(item){
+            upper_elem = item.replace(/^\w/, c => c.toUpperCase());
+            console.log(category, item, planet_values[category][item])
+            update_values(upper_elem.split("_")[0], planet_values[category][item]); 
+        });
+    }
+}
+
 // Initalize Values
 window.onload = function(){
     // if no save exists, then create a new one
@@ -176,7 +185,7 @@ window.setInterval(function(){
     console.log("Saved");
 }, 60000);
 
-// auto-increase population every 5 seconds
+// auto-increase year every 5 seconds
 window.setInterval(function(){
     planet_values["year"]["year_count"] += 1;
     update_values("Year", planet_values["year"]["year_count"]);
@@ -185,32 +194,41 @@ window.setInterval(function(){
 
 // Update function every second
 // TODO: Make better population algorithm
-function update_population(){
-    if(planet_values["buildings"]["farm_count"] < 30)
-        return;
+// function update_population(){
+//     if(planet_values["buildings"]["farm_count"] < 30)
+//         return;
     
-    if(planet_values["resources"]["food_count"] == 0){
-        planet_values["population"]["population_count"] -= 1;
-    }
+//     if(planet_values["resources"]["food_count"] == 0){
+//         planet_values["population"]["population_count"] -= 1;
+//     }
 
-    if(planet_values["population"]["population_count"] > planet_values["resources"]["food_count"]){
-        planet_values["population"]["population_count"] -= Math.ceil(planet_values["resources"]["food_count"]/4);
-        planet_values["resources"]["food_count"] -= Math.ceil(planet_values["resources"]["food_count"]/4);
-    }
-    else {
-        planet_values["population"]["population_count"] += Math.ceil(planet_values["resources"]["food_count"]/2);
-        planet_values["resources"]["food_count"] -= Math.ceil(planet_values["resources"]["food_count"]/2);
-    }
-    update_values("Population", planet_values["population"]["population_count"]);
-    update_values("Food", planet_values["resources"]["food_count"]);
-};
+//     if(planet_values["population"]["population_count"] > planet_values["resources"]["food_count"]){
+//         planet_values["population"]["population_count"] -= Math.ceil(planet_values["resources"]["food_count"]/4);
+//         planet_values["resources"]["food_count"] -= Math.ceil(planet_values["resources"]["food_count"]/4);
+//     }
+//     else {
+//         planet_values["population"]["population_count"] += Math.ceil(planet_values["resources"]["food_count"]/2);
+//         planet_values["resources"]["food_count"] -= Math.ceil(planet_values["resources"]["food_count"]/2);
+//     }
+//     update_values("Population", planet_values["population"]["population_count"]);
+//     update_values("Food", planet_values["resources"]["food_count"]);
+// };
 
 function update_resource_count(elem){
     var elemLower = elem.toLowerCase();
     // translate the type of production from the resource
     var type = prod_type[elemLower];
     var prod_count = planet_values["buildings"][type+"_count"];
-    planet_values["resources"][elemLower+"_count"] += prod_count * prod_upgrades[type];
+    var stor_type = storage_type[elemLower]+"_count";
+    var stor_value = planet_values["storage"][stor_type];
+    resource_max[elemLower] = stor_value * 250;
+
+    if(planet_values["resources"][elemLower+"_count"] + prod_count * prod_upgrades[type] > resource_max[elemLower]){
+        planet_values["resources"][elemLower+"_count"] = resource_max[elemLower]
+    } 
+    else {
+        planet_values["resources"][elemLower+"_count"] += prod_count * prod_upgrades[type];
+    }
     update_values(elem, planet_values["resources"][elemLower+"_count"]);
     update_rates(elemLower, prod_upgrades[type] * prod_count);
     update_max(elemLower, resource_max[elemLower]);
@@ -224,11 +242,10 @@ window.setInterval(function(){
         update_resource_count(upper_elem.split("_")[0]); 
     });
 
-    update_population();
+    // update_population();
   }, 1000);
 
 
-// Updating Values individually
 function check_valid(elem){
     var element = building_costs[elem.split("_")[0]];
     for(req in element){
@@ -253,6 +270,13 @@ function check_valid_pop(){
     return 0;
 }
 
+function check_valid_resource(elem){
+    var red = elem.split("_")[0];
+    if(planet_values["resources"][elem] + 1 > resource_max[red])
+        return 0;
+    return 1;
+}
+
 function perform_action(category, elem){
     var valid_action = 1;
     if(category == "buildings" || category == "houses" || category == "storage"){
@@ -260,6 +284,10 @@ function perform_action(category, elem){
     }
     if(category == "population") {
         valid_action = check_valid_pop()
+    }
+
+    if(category == "resources"){
+        valid_action = check_valid_resource(elem);
     }
     
     if(!valid_action)
@@ -312,7 +340,7 @@ function update_max_pop(category, elem){
 function open_tab(evt, tabName) {
     // Declare all variables
     var i, tabcontent, tablinks;
-  
+
     // Get all elements with class="tabcontent" and hide them
     tabcontent = $(".tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
