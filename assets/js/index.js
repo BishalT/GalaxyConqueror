@@ -219,8 +219,8 @@ function update_resource_count(elem){
     // translate the type of production from the resource
     var type = prod_type[elemLower];
     var prod_count = planet_values["buildings"][type+"_count"];
-    var stor_type = storage_type[elemLower]+"_count";
-    var stor_value = planet_values["storage"][stor_type];
+    var stor_type = storage_type[elemLower];
+    var stor_value = planet_values["storage"][stor_type+"_count"];
     resource_max[elemLower] = stor_value * 250;
 
     if(planet_values["resources"][elemLower+"_count"] + prod_count * prod_upgrades[type] > resource_max[elemLower]){
