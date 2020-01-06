@@ -213,10 +213,15 @@ function update_population(){
 
     // if the production rate of food is less
     if(_food_rate < _pop_count ){
-        var difference = _food - _pop_count;
+        var difference = Math.abs(_food_rate - _pop_count);
         // logaithmic decline of population per base 10
         var loss = Math.floor(Math.log10(difference));
-        planet_values["population"]["population_count"] -= loss;
+        if(planet_values["population"]["population_count"] - loss == 0){
+            planet_values["population"]["population_count"] = 0;
+        }
+        else {
+            planet_values["population"]["population_count"] -= loss;
+        }
 
     }
 
@@ -242,13 +247,7 @@ function update_resource_count(elem){
         planet_values["resources"][elemLower+"_count"] = resource_max[elemLower]
     } 
     else {
-        if(elem == "Food"){
-            console.log("Pre: resource: " + elem + " " + planet_values["resources"][elemLower+"_count"]);
-        }
         planet_values["resources"][elemLower+"_count"] += prod_rate;
-        if(elem == "Food"){
-            console.log("Post: resource: " + elem + " " + planet_values["resources"][elemLower+"_count"]);
-        }
         // in the case that it is 0 or less
         if (planet_values["resources"][elemLower+"_count"] <= 0){
             planet_values["resources"][elemLower+"_count"] = 0;
