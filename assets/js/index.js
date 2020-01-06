@@ -1,4 +1,5 @@
 // Global Values
+var FARM_MINIMUM = 10;
 var planet_values = {
     year: {
         year_count: 0,
@@ -44,12 +45,12 @@ var storage_type = {
 var resource_max = {
     stone: 250,
     wood: 250,
-    food: 250,
+    food: 500,
 }
 
 var prod_upgrades = {
     quarry: 1,
-    farm: 1,
+    farm: 3,
     forester: 1,
 }
 
@@ -89,6 +90,7 @@ var building_costs = {
         stone: 1000,
     }
 }
+
 
 function reset_game(){
     var confirmed = confirm("Do you wish to reset?")
@@ -194,43 +196,66 @@ window.setInterval(function(){
 
 // Update function every second
 // TODO: Make better population algorithm
-// function update_population(){
-//     if(planet_values["buildings"]["farm_count"] < 30)
-//         return;
+function update_population(){
+    if(planet_values["buildings"]["farm_count"] < FARM_MINIMUM)
+        return;
     
-//     if(planet_values["resources"]["food_count"] == 0){
-//         planet_values["population"]["population_count"] -= 1;
-//     }
+    var _food = planet_values["resources"]["food_count"];
+    if(_food == 0){
+        planet_values["population"]["population_count"] -= 1;
+        update_values("Population", planet_values["population"]["population_count"]);
+        update_values("Food", planet_values["resources"]["food_count"]);
+        return;
+    }
 
-//     if(planet_values["population"]["population_count"] > planet_values["resources"]["food_count"]){
-//         planet_values["population"]["population_count"] -= Math.ceil(planet_values["resources"]["food_count"]/4);
-//         planet_values["resources"]["food_count"] -= Math.ceil(planet_values["resources"]["food_count"]/4);
-//     }
-//     else {
-//         planet_values["population"]["population_count"] += Math.ceil(planet_values["resources"]["food_count"]/2);
-//         planet_values["resources"]["food_count"] -= Math.ceil(planet_values["resources"]["food_count"]/2);
-//     }
-//     update_values("Population", planet_values["population"]["population_count"]);
-//     update_values("Food", planet_values["resources"]["food_count"]);
-// };
+    var _pop_count = planet_values["population"]["population_count"];
+    var _food_rate = planet_values["buildings"]["farm_count"] * prod_upgrades["farm"];
+
+    // if the production rate of food is less
+    if(_food_rate < _pop_count ){
+        var difference = _food - _pop_count;
+        // logaithmic decline of population per base 10
+        var loss = Math.floor(Math.log10(difference));
+        planet_values["population"]["population_count"] -= loss;
+
+    }
+
+    update_values("Population", planet_values["population"]["population_count"]);
+
+};
 
 function update_resource_count(elem){
     var elemLower = elem.toLowerCase();
     // translate the type of production from the resource
     var type = prod_type[elemLower];
     var prod_count = planet_values["buildings"][type+"_count"];
+    var prod_rate = prod_count * prod_upgrades[type];
+    // food case, actual production rate = production rate - consumption rate
+    if(elemLower == "food" && planet_values["buildings"]["farm_count"] >= FARM_MINIMUM){
+        prod_rate -= planet_values["population"]["population_count"];
+    }
     var stor_type = storage_type[elemLower];
     var stor_value = planet_values["storage"][stor_type+"_count"];
     resource_max[elemLower] = stor_value * 250;
 
-    if(planet_values["resources"][elemLower+"_count"] + prod_count * prod_upgrades[type] > resource_max[elemLower]){
+    if(planet_values["resources"][elemLower+"_count"] + prod_rate > resource_max[elemLower]){
         planet_values["resources"][elemLower+"_count"] = resource_max[elemLower]
     } 
     else {
-        planet_values["resources"][elemLower+"_count"] += prod_count * prod_upgrades[type];
+        if(elem == "Food"){
+            console.log("Pre: resource: " + elem + " " + planet_values["resources"][elemLower+"_count"]);
+        }
+        planet_values["resources"][elemLower+"_count"] += prod_rate;
+        if(elem == "Food"){
+            console.log("Post: resource: " + elem + " " + planet_values["resources"][elemLower+"_count"]);
+        }
+        // in the case that it is 0 or less
+        if (planet_values["resources"][elemLower+"_count"] <= 0){
+            planet_values["resources"][elemLower+"_count"] = 0;
+        }
     }
     update_values(elem, planet_values["resources"][elemLower+"_count"]);
-    update_rates(elemLower, prod_upgrades[type] * prod_count);
+    update_rates(elemLower, prod_rate);
     update_max(elemLower, resource_max[elemLower]);
 }
 
@@ -242,7 +267,7 @@ window.setInterval(function(){
         update_resource_count(upper_elem.split("_")[0]); 
     });
 
-    // update_population();
+    update_population();
   }, 1000);
 
 
@@ -303,11 +328,11 @@ function perform_action(category, elem){
 }
 
 function update_values(elem, count){
-    var updateVal = elem+": "+count
+    var updateVal = elem+": "+count;
     if(elem == "max"){
-        updateVal = "Max: " + count
+        updateVal = "Max: " + count;
     }
-    document.getElementsByClassName(elem.toLowerCase()+"-count")[0].textContent = updateVal;
+    $("."+elem.toLowerCase()+"-count")[0].textContent = updateVal;
 }
 
 function update_rates(elem, rate){
