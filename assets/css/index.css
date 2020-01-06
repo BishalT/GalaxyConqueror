@@ -116,8 +116,19 @@ body {
   border: 1px solid #ccc;
   border-top: none;
   width: 33.3%;
+  animation: fadeEffect 0.5s;
+  /* Fading effect takes 1 second */
 }
 
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .footer {
   position: fixed;
   left: 0;

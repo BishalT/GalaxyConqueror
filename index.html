@@ -18,7 +18,7 @@
             <div class="planet-header">
                 <h1 class="planet-name"> Current Planet: Earth </h1>
                 <h2 class="population-count"> Population: </h1>
-                <h3 class="max-count"> Max Population: </h2>
+                <h3 class="year-count">Year: </h3>
             </div>
             <div class="planet-resources">
                 <table class="planet-resource">
@@ -26,31 +26,35 @@
                         <td><button onclick="perform_action('resources', 'stone_count')"><img src="assets/images/icon/pickaxe-icon.png"/> Mine</button></td>
                         <td><p class="stone-count">Stone: </p></td>
                         <td><p class="stone-rate">0.0/s</p></td>
-                    </tr>
-                    <tr class="planet-resource-row">
-                        <td><button onclick="perform_action('resources', 'food_count')"><img src="assets/images/icon/food-icon.png"/>Harvest</button></td>
-                        <td><p class="food-count">Food: </p></td>
-                        <td><p class="food-rate">0.0/s</p></td>
+                        <td><p class="stone-max">max: </p></td>
                     </tr>
                     <tr class="planet-resource-row">
                         <td><button onclick="perform_action('resources', 'wood_count')"><img src="assets/images/icon/axe-icon.png"/>Chop</button></td>
                         <td><p class="wood-count">Wood: </p></td>
                         <td><p class="wood-rate">0.0/s</p></td>
+                        <td><p class="wood-max">max: </p></td>
+                    </tr>
+                    <tr class="planet-resource-row">
+                            <td><button onclick="perform_action('resources', 'food_count')"><img src="assets/images/icon/food-icon.png"/>Harvest</button></td>
+                            <td><p class="food-count">Food: </p></td>
+                            <td><p class="food-rate">0.0/s</p></td>
+                            <td><p class="food-max">max: </p></td>
                     </tr>
                 </table>
                 <img src="assets/images/planet-Earth.png"/>
                 <table class="planet-resource">
                         <tr class="planet-population-row">
                                 <td><button onclick="perform_action('population', 'population_count')"><img src="assets/images/icon/person-icon.png"/>Increase</button></td>
-                                <td><p class="wood-count">Population</p></td>
+                                <td><p>Population</p></td>
+                                <td><p class="max-count"> Max: </p><td>
                         </tr>
                 </table>
             </div>
             <div class="tempCol">
                 <div class="tab">
-                    <button class="tablinks" onclick="openCity(event, 'production')">Production</button>
-                    <button class="tablinks" onclick="openCity(event, 'housing')">Housing</button>
-                    <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+                    <button class="tablinks" onclick="open_tab(event, 'production')" id="default-open">Production</button>
+                    <button class="tablinks" onclick="open_tab(event, 'storage')">Storage</button>
+                    <button class="tablinks" onclick="open_tab(event, 'housing')">Housing</button>
                 </div>
                 
                 <!-- Tab content -->
@@ -73,6 +77,26 @@
                             </tr>
                     </table>
                 </div>
+
+                <div id="storage" class="tabcontent">
+                        <table class="planet-buildings">
+                                <tr class="planet-building-row">
+                                    <td><p class="stockpile-count"> Stockpile: </p></td>
+                                    <td><button onclick="perform_action('storage','stockpile_count')" data-toggle="tooltip" data-placement="right" title="50 stone, +250 stone"> 
+                                            <img src="assets/images/icon/hammer-icon.png"/>Build</button></td>
+                                </tr>
+                                <tr class="planet-building-row">
+                                    <td><p class="mill-count"> Mill: </p></td>
+                                    <td><button onclick="perform_action('storage','mill_count')" data-toggle="tooltip" data-placement="right" title="50 wood, +250 wood">
+                                            <img src="assets/images/icon/hammer-icon.png"/>Build</button></td>
+                                </tr>
+                                <tr class="planet-building-row">
+                                    <td><p class="barn-count"> Barn: </p></td>
+                                    <td><button onclick="perform_action('storage','barn_count')" data-toggle="tooltip" data-placement="right" title="50 wood, 50 stone, +500 food">
+                                            <img src="assets/images/icon/hammer-icon.png"/>Build</button></td>
+                                </tr>
+                        </table>
+                    </div>
                 
                 <div id="housing" class="tabcontent">
                     <table class="planet-houses">
@@ -93,11 +117,7 @@
                             </tr>
                     </table>
                 </div>
-                
-                <div id="Tokyo" class="tabcontent">
-                    <h3>Tokyo</h3>
-                    <p>Tokyo is the capital of Japan.</p>
-                </div>
+
             </div>
         </div>
 
