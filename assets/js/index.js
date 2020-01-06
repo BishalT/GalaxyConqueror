@@ -270,17 +270,42 @@ window.setInterval(function(){
   }, 1000);
 
 
-function check_valid(elem){
+function check_valid(elem, count){
+    var save_count_value = count.value;
     var element = building_costs[elem.split("_")[0]];
+    var valid = 1;
+    var minimum_create = {};
     for(req in element){
         var res = planet_values["resources"][req+"_count"];
-        if(res - element[req] < 0){
-            return 0;
+
+        // if not enough required, find the minimum that can be made
+        minimum_create[req] = Math.floor(res/(element[req])); 
+    
+        if(res - (element[req] * count.value) < 0){
+            valid = 0;
         }
     }
 
+    if(!valid && count.value == 1){
+        return 0;
+    }
+
+    if(!valid){
+        for(req in minimum_create){
+            if(count.value > minimum_create[req]){
+                count.value = minimum_create[req];
+            }
+        }
+        if(count.value == 0)
+            return;
+    }
+
+    if(count.value > save_count_value)
+        count.value;
+
+
     for(req in element)
-        planet_values["resources"][req+"_count"] -= element[req];
+        planet_values["resources"][req+"_count"] -= element[req] * count.value;
     
     return 1;
 }
@@ -301,10 +326,11 @@ function check_valid_resource(elem){
     return 1;
 }
 
-function perform_action(category, elem){
+function perform_action(category, elem, count){
     var valid_action = 1;
+    var countObj = {value: count};
     if(category == "buildings" || category == "houses" || category == "storage"){
-        valid_action = check_valid(elem);
+        valid_action = check_valid(elem, countObj);
     }
     if(category == "population") {
         valid_action = check_valid_pop()
@@ -317,7 +343,7 @@ function perform_action(category, elem){
     if(!valid_action)
         return;
 
-    planet_values[category][elem] += 1;
+    planet_values[category][elem] += countObj.value;
     if(category == "houses"){
         update_max_pop(category, elem);
     }
