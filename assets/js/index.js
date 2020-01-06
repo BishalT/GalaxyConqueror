@@ -337,18 +337,24 @@ function update_max_pop(category, elem){
     update_values("max", planet_values["population"]["max_count"]);
 }
 
-function open_tab(evt, tabName) {
+function open_tab(evt, tabName, tabsNum) {
     // Declare all variables
     var i, tabcontent, tablinks;
 
     // Get all elements with class="tabcontent" and hide them
-    tabcontent = $(".tabcontent");
+    if(tabsNum == 1){
+        tabcontent = $(".tabcontent");
+        tablinks = $(".tablinks");
+    }
+    else {
+        tabcontent = $(".tabcontent"+tabsNum);
+        tablinks = $(".tablinks"+tabsNum);
+    }
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
   
     // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = $(".tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }

@@ -18,6 +18,12 @@
     align-items: center;
 }
 
+@mixin dis-flex-row-no-align{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 @mixin dis-flex-row-no-justify {
     display: flex;
     flex-direction: row;
@@ -68,9 +74,26 @@ body {
     width: inherit;
 }
 
+.planet-holder-two{
+    @include dis-flex-row-no-align;
+    width: inherit;
+}
+
 .planet-resource {
-    width: 33.3%;
+    width: 100%;
     height: auto;
+    border: 1px solid #ccc;
+}
+
+.resources-box, .population-box {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 12px;
 }
 
 .planet-buildings, .planet-houses {
@@ -104,7 +127,7 @@ body {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
-    width: 33.3%;
+    width: 75%;
   }
   
   /* Style the buttons that are used to open the tab content */
@@ -130,12 +153,12 @@ body {
   }
   
   /* Style the tab content */
-  .tabcontent {
+  .tabcontent, .tabcontent2 {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-    width: 33.3%;
+    width: 75%;
     animation: fadeEffect 0.5s; /* Fading effect takes 1 second */
   }
   
