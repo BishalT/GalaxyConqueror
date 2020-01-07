@@ -45,7 +45,7 @@ var storage_type = {
 var resource_max = {
     stone: 250,
     wood: 250,
-    food: 500,
+    food: 250,
 }
 
 var prod_upgrades = {
@@ -91,12 +91,12 @@ var building_costs = {
     }
 }
 
-
 function reset_game(){
     var confirmed = confirm("Do you wish to reset?")
     if(!confirmed){
         return;
     }
+    deleteSave();
     planet_values = {
         year: {
             year_count: 0,
@@ -126,7 +126,22 @@ function reset_game(){
             mansion_count: 0,
         }
     };
+
+    resource_max = {
+        stone: 250,
+        wood: 250,
+        food: 250,
+    }
+
+    prod_upgrades = {
+        quarry: 1,
+        farm: 3,
+        forester: 1,
+    }
+
     write_values();
+    var saveObj = {planet_values, prod_upgrades, resource_max};
+    bake_cookie("save_galaxy", saveObj);
 }
 
 
@@ -135,6 +150,7 @@ function deleteSave(){
     localStorage.removeItem('save_galaxy');
 }
 
+// TODO: add resource_max and prod_upgrades to the save value
 function bake_cookie(name, value) {
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + 30);
@@ -151,7 +167,9 @@ function read_cookie(name) {
 }
 
 function readSavedData(data){
-    planet_values = data;
+    planet_values = data["planet_values"];
+    resource_max = data["resource_max"];
+    prod_upgrades = data["prod_upgrades"];
 }
 
 $(document).ready(function(){
@@ -172,7 +190,8 @@ function write_values(){
 window.onload = function(){
     // if no save exists, then create a new one
     if(read_cookie("save_galaxy") == null){
-        bake_cookie("save_galaxy", planet_values)
+        var saveObj = {planet_values, prod_upgrades, resource_max};
+        bake_cookie("save_galaxy", saveObj);
     } else { // else read from it
         readSavedData(read_cookie("save_galaxy"));
     }
@@ -183,7 +202,8 @@ window.onload = function(){
 // auto-save minute
 window.setInterval(function(){
     deleteSave();
-    bake_cookie("save_galaxy", planet_values)
+    var saveObj = {planet_values, prod_upgrades, resource_max};
+    bake_cookie("save_galaxy", saveObj);
     console.log("Saved");
 }, 60000);
 
