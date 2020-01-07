@@ -117,7 +117,7 @@ function reset_game(){
         },
         storage: {
             barn_count: 1,
-            sawmill_count: 1,
+            mill_count: 1,
             stockpile_count: 1,
         },
         houses:{
