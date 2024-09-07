@@ -13,3 +13,7 @@ Extraplanetary Exploration
 
 ## Stage 4 (TBD): 
 Conquer the local system
+
+## 🤝 Contributing
+
+### Clone the repo
